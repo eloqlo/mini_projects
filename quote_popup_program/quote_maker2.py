@@ -10,12 +10,19 @@ def show_random_quote():
             quotes = file.readlines()
         
         if quotes:
-            quote = random.choice(quotes).strip()
+            new_quotes = []
+            counter = 0
+            for tmp in quotes:
+                if tmp!='\n':
+                    counter += 1
+                    new_quotes.append(str(counter) + ' ' + tmp)
+            quote_tmp = random.choice(new_quotes).strip()
+            quote_len, quote_num, quote = counter, quote_tmp.split()[0], ' '.join(quote_tmp.split()[1:])
             
             # 팝업 창 생성
             root = tk.Tk()
             root.withdraw()  # 메인 창 숨기기
-            messagebox.showinfo("오늘의 명언", quote)
+            messagebox.showinfo(f"[{quote_num}/{quote_len}] 오늘의 명언", quote)
             root.destroy()
         else:
             print("명언 파일이 비어 있습니다.")
